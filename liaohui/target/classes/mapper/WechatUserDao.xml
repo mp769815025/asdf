@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhirong.liaohui.dao.WechatUserDao">
+
+    <resultMap id="BaseResultMap" type="com.zhirong.liaohui.entity.WechatUser">
+        <!--@Table wechat_user-->
+        <result property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="nickname" column="nickname" jdbcType="VARCHAR"/>
+        <result property="avatarUrl" column="avatar_url" jdbcType="VARCHAR"/>
+        <result property="gender" column="gender" jdbcType="INTEGER"/>
+        <result property="country" column="country" jdbcType="VARCHAR"/>
+        <result property="province" column="province" jdbcType="VARCHAR"/>
+        <result property="city" column="city" jdbcType="VARCHAR"/>
+        <result property="mobile" column="mobile" jdbcType="VARCHAR"/>
+        <result property="openId" column="open_id" jdbcType="VARCHAR"/>
+        <result property="unionId" column="union_id" jdbcType="VARCHAR"/>
+        <result property="createdAt" column="created_at" jdbcType="TIMESTAMP"/>
+        <result property="updatedAt" column="updated_at" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          id, nickname, avatar_url, gender, country, province, city, mobile, open_id, union_id, created_at, updated_at
+        from wechat_user
+        where id = #{id}
+    </select>
+
+    <select id="getUserByOpenId" resultMap="BaseResultMap">
+        select
+            id, nickname, avatar_url, gender, country, province, city, mobile, open_id, union_id, created_at, updated_at
+        from wechat_user
+        where open_id = #{open_id}
+
+    </select>
+
+<!--    &lt;!&ndash;查询指定行数据&ndash;&gt;-->
+<!--    <select id="queryAllByLimit" resultMap="BaseResultMap">-->
+<!--        select-->
+<!--          id, nickname, avatar_url, gender, country, province, city, mobile, open_id, union_id, created_at, updated_at-->
+<!--        from wechat_user-->
+<!--        <where>-->
+<!--            <if test="id != null and id != ''">-->
+<!--                and id = #{id}-->
+<!--            </if>-->
+<!--            <if test="nickname != null and nickname != ''">-->
+<!--                and nickname = #{nickname}-->
+<!--            </if>-->
+<!--            <if test="avatarUrl != null and avatarUrl != ''">-->
+<!--                and avatar_url = #{avatarUrl}-->
+<!--            </if>-->
+<!--            <if test="gender != null">-->
+<!--                and gender = #{gender}-->
+<!--            </if>-->
+<!--            <if test="country != null and country != ''">-->
+<!--                and country = #{country}-->
+<!--            </if>-->
+<!--            <if test="province != null and province != ''">-->
+<!--                and province = #{province}-->
+<!--            </if>-->
+<!--            <if test="city != null and city != ''">-->
+<!--                and city = #{city}-->
+<!--            </if>-->
+<!--            <if test="mobile != null and mobile != ''">-->
+<!--                and mobile = #{mobile}-->
+<!--            </if>-->
+<!--            <if test="openId != null and openId != ''">-->
+<!--                and open_id = #{openId}-->
+<!--            </if>-->
+<!--            <if test="unionId != null and unionId != ''">-->
+<!--                and union_id = #{unionId}-->
+<!--            </if>-->
+<!--            <if test="createdAt != null">-->
+<!--                and created_at = #{createdAt}-->
+<!--            </if>-->
+<!--            <if test="updatedAt != null">-->
+<!--                and updated_at = #{updatedAt}-->
+<!--            </if>-->
+<!--        </where>-->
+<!--        limit #{pageable.offset}, #{pageable.pageSize}-->
+<!--    </select>-->
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          id, nickname, avatar_url, gender, country, province, city, mobile, open_id, union_id, created_at, updated_at
+        from liaohui.wechat_user
+    </select>
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from wechat_user
+        <where>
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+            <if test="nickname != null and nickname != ''">
+                and nickname = #{nickname}
+            </if>
+            <if test="avatarUrl != null and avatarUrl != ''">
+                and avatar_url = #{avatarUrl}
+            </if>
+            <if test="gender != null">
+                and gender = #{gender}
+            </if>
+            <if test="country != null and country != ''">
+                and country = #{country}
+            </if>
+            <if test="province != null and province != ''">
+                and province = #{province}
+            </if>
+            <if test="city != null and city != ''">
+                and city = #{city}
+            </if>
+            <if test="mobile != null and mobile != ''">
+                and mobile = #{mobile}
+            </if>
+            <if test="openId != null and openId != ''">
+                and open_id = #{openId}
+            </if>
+            <if test="unionId != null and unionId != ''">
+                and union_id = #{unionId}
+            </if>
+            <if test="createdAt != null">
+                and created_at = #{createdAt}
+            </if>
+            <if test="updatedAt != null">
+                and updated_at = #{updatedAt}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into wechat_user(nickname, avatar_url, gender, country, province, city, mobile, open_id, union_id, created_at, updated_at)
+        values (#{nickname}, #{avatarUrl}, #{gender}, #{country}, #{province}, #{city}, #{mobile}, #{openId}, #{unionId}, #{createdAt}, #{updatedAt})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into wechat_user(nickname, avatar_url, gender, country, province, city, mobile, open_id, union_id, created_at, updated_at)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.nickname}, #{entity.avatarUrl}, #{entity.gender}, #{entity.country}, #{entity.province}, #{entity.city}, #{entity.mobile}, #{entity.openId}, #{entity.unionId}, #{entity.createdAt}, #{entity.updatedAt})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into wechat_user(nickname, avatar_url, gender, country, province, city, mobile, open_id, union_id, created_at, updated_at)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.nickname}, #{entity.avatarUrl}, #{entity.gender}, #{entity.country}, #{entity.province}, #{entity.city}, #{entity.mobile}, #{entity.openId}, #{entity.unionId}, #{entity.createdAt}, #{entity.updatedAt})
+        </foreach>
+        on duplicate key update
+        nickname = values(nickname),
+        avatar_url = values(avatar_url),
+        gender = values(gender),
+        country = values(country),
+        province = values(province),
+        city = values(city),
+        mobile = values(mobile),
+        open_id = values(open_id),
+        union_id = values(union_id),
+        created_at = values(created_at),
+        updated_at = values(updated_at)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="updateByOpenid">
+        update wechat_user
+        <set>
+            <if test="nickname != null and nickname != ''">
+                nickname = #{nickname},
+            </if>
+            <if test="avatarUrl != null and avatarUrl != ''">
+                avatar_url = #{avatarUrl},
+            </if>
+            <if test="gender != null">
+                gender = #{gender},
+            </if>
+            <if test="country != null and country != ''">
+                country = #{country},
+            </if>
+            <if test="province != null and province != ''">
+                province = #{province},
+            </if>
+            <if test="city != null and city != ''">
+                city = #{city},
+            </if>
+            <if test="mobile != null and mobile != ''">
+                mobile = #{mobile},
+            </if>
+            <if test="unionId != null and unionId != ''">
+                union_id = #{unionId},
+            </if>
+            <if test="createdAt != null">
+                created_at = #{createdAt},
+            </if>
+            <if test="updatedAt != null">
+                updated_at = #{updatedAt},
+            </if>
+        </set>
+        where open_id = #{openId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from wechat_user where id = #{id}
+    </delete>
+
+</mapper>
+

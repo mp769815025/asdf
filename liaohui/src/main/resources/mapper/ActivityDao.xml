@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhirong.liaohui.dao.ActivityDao">
+
+    <resultMap id="BaseResultMap" type="com.zhirong.liaohui.entity.Activity">
+        <!--@Table activity-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="startTime" column="start_time" jdbcType="TIMESTAMP"/>
+        <result property="introduct" column="introduct" jdbcType="VARCHAR"/>
+        <result property="addressDetail" column="address_detail" jdbcType="VARCHAR"/>
+        <result property="address" column="address" jdbcType="VARCHAR"/>
+        <result property="userNum" column="user_num" jdbcType="INTEGER"/>
+        <result property="alreadyJoinNum" column="already_join_num" jdbcType="INTEGER"/>
+        <result property="detailText" column="detail_text" jdbcType="VARCHAR"/>
+        <result property="photoUrl" column="photo_url" jdbcType="VARCHAR"/>
+        <result property="messages" column="messages" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="VARCHAR"/>
+        <result property="qrCodeUrl" column="qr_code_url" jdbcType="VARCHAR"/>
+        <result property="backMoneyIdea" column="back_money_idea" jdbcType="VARCHAR"/>
+        <result property="groupNames" column="group_names" jdbcType="VARCHAR"/>
+        <result property="activityLabel" column="activity_label" jdbcType="VARCHAR"/>
+        <result property="isShowIndex" column="is_show_index" jdbcType="INTEGER"/>
+        <result property="userInfoText" column="user_info_text" jdbcType="VARCHAR"/>
+        <result property="isRealationGroup" column="is_realation_group" jdbcType="INTEGER"/>
+        <result property="isWaiting" column="is_waiting" jdbcType="INTEGER"/>
+        <result property="isPass" column="is_pass" jdbcType="INTEGER"/>
+        <result property="isRelationUser" column="is_relation_user" jdbcType="INTEGER"/>
+        <result property="moneyType" column="money_type" jdbcType="VARCHAR"/>
+        <result property="money" column="money" jdbcType="VARCHAR"/>
+        <result property="feedback" column="Feedback" jdbcType="VARCHAR"/>
+        <result property="reportStopTime" column="report_stop_time" jdbcType="TIMESTAMP"/>
+        <result property="content" column="content" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          id, name, type, create_time, start_time, introduct,content, address_detail, address, user_num, already_join_num, detail_text, photo_url, messages, status, qr_code_url, back_money_idea, group_names, activity_label, is_show_index, user_info_text, is_realation_group, is_waiting, is_pass, is_relation_user, money_type, money, Feedback, report_stop_time
+        from activity
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit"  resultMap="BaseResultMap">
+        select
+          id, name, type, create_time, start_time,content, introduct, address_detail, address, user_num, already_join_num, detail_text, photo_url, messages, status, qr_code_url, back_money_idea, group_names, activity_label, is_show_index, user_info_text, is_realation_group, is_waiting, is_pass, is_relation_user, money_type, money, Feedback, report_stop_time
+        from activity
+        <where>
+            <if test="activity.id != null">
+                and id = #{activity.id}
+            </if>
+            <if test="activity.name != null and activity.name != ''">
+                and name = #{activity.name}
+            </if>
+            <if test="activity.type != null and activity.type != ''">
+                and type = #{activity.type}
+            </if>
+            <if test="activity.createTime != null">
+                and create_time = #{activity.createTime}
+            </if>
+            <if test="activity.startTime != null">
+                and start_time = #{activity.startTime}
+            </if>
+            <if test="activity.introduct != null and activity.introduct != ''">
+                and introduct = #{activity.introduct}
+            </if>
+            <if test="activity.addressDetail != null and activity.addressDetail != ''">
+                and address_detail = #{activity.addressDetail}
+            </if>
+            <if test="activity.address != null and activity.address != ''">
+                and address = #{activity.address}
+            </if>
+            <if test="activity.userNum != null">
+                and user_num = #{activity.userNum}
+            </if>
+            <if test="activity.alreadyJoinNum != null">
+                and already_join_num = #{activity.alreadyJoinNum}
+            </if>
+            <if test="activity.detailText != null and activity.detailText != ''">
+                and detail_text = #{activity.detailText}
+            </if>
+            <if test="activity.photoUrl != null and activity.photoUrl != ''">
+                and photo_url = #{activity.photoUrl}
+            </if>
+            <if test="activity.messages != null and activity.messages != ''">
+                and messages = #{activity.messages}
+            </if>
+            <if test="activity.status != null and activity.status != ''">
+                and status = #{status}
+            </if>
+            <if test="activity.qrCodeUrl != null and activity.qrCodeUrl != ''">
+                and qr_code_url = #{activity.qrCodeUrl}
+            </if>
+            <if test="activity.backMoneyIdea != null and activity.backMoneyIdea != ''">
+                and back_money_idea = #{activity.backMoneyIdea}
+            </if>
+            <if test="activity.groupNames != null and activity.groupNames != ''">
+                and group_names = #{activity.groupNames}
+            </if>
+            <if test="activity.activityLabel != null and activity.activityLabel != ''">
+                and activity_label = #{activity.activityLabel}
+            </if>
+            <if test="activity.isShowIndex != null">
+                and is_show_index = #{activity.isShowIndex}
+            </if>
+            <if test="activity.userInfoText != null and activity.userInfoText != ''">
+                and user_info_text = #{activity.userInfoText}
+            </if>
+            <if test="activity.isRealationGroup != null">
+                and is_realation_group = #{activity.isRealationGroup}
+            </if>
+            <if test="activity.isWaiting != null">
+                and is_waiting = #{activity.isWaiting}
+            </if>
+            <if test="activity.isPass != null">
+                and is_pass = #{activity.isPass}
+            </if>
+            <if test="activity.isRelationUser != null">
+                and is_relation_user = #{activity.isRelationUser}
+            </if>
+            <if test="activity.moneyType != null and activity.moneyType != ''">
+                and money_type = #{activity.moneyType}
+            </if>
+            <if test="activity.money != null and activity.money != ''">
+                and money = #{activity.money}
+            </if>
+            <if test="activity.feedback != null and activity.feedback != ''">
+                and Feedback = #{activity.feedback}
+            </if>
+            <if test="activity.reportStopTime != null">
+                and report_stop_time = #{activity.reportStopTime}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          id, name, type, create_time, start_time,content, introduct, address_detail, address, user_num, already_join_num, detail_text, photo_url, messages, status, qr_code_url, back_money_idea, group_names, activity_label, is_show_index, user_info_text, is_realation_group, is_waiting, is_pass, is_relation_user, money_type, money, Feedback, report_stop_time
+        from liaohui.activity
+    </select>    
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from activity
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="type != null and type != ''">
+                and type = #{type}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="startTime != null">
+                and start_time = #{startTime}
+            </if>
+            <if test="introduct != null and introduct != ''">
+                and introduct = #{introduct}
+            </if>
+            <if test="addressDetail != null and addressDetail != ''">
+                and address_detail = #{addressDetail}
+            </if>
+            <if test="address != null and address != ''">
+                and address = #{address}
+            </if>
+            <if test="userNum != null">
+                and user_num = #{userNum}
+            </if>
+            <if test="alreadyJoinNum != null">
+                and already_join_num = #{alreadyJoinNum}
+            </if>
+            <if test="detailText != null and detailText != ''">
+                and detail_text = #{detailText}
+            </if>
+            <if test="photoUrl != null and photoUrl != ''">
+                and photo_url = #{photoUrl}
+            </if>
+            <if test="messages != null and messages != ''">
+                and messages = #{messages}
+            </if>
+            <if test="status != null and status != ''">
+                and status = #{status}
+            </if>
+            <if test="qrCodeUrl != null and qrCodeUrl != ''">
+                and qr_code_url = #{qrCodeUrl}
+            </if>
+            <if test="backMoneyIdea != null and backMoneyIdea != ''">
+                and back_money_idea = #{backMoneyIdea}
+            </if>
+            <if test="groupNames != null and groupNames != ''">
+                and group_names = #{groupNames}
+            </if>
+            <if test="activityLabel != null and activityLabel != ''">
+                and activity_label = #{activityLabel}
+            </if>
+            <if test="isShowIndex != null">
+                and is_show_index = #{isShowIndex}
+            </if>
+            <if test="userInfoText != null and userInfoText != ''">
+                and user_info_text = #{userInfoText}
+            </if>
+            <if test="isRealationGroup != null">
+                and is_realation_group = #{isRealationGroup}
+            </if>
+            <if test="isWaiting != null">
+                and is_waiting = #{isWaiting}
+            </if>
+            <if test="isPass != null">
+                and is_pass = #{isPass}
+            </if>
+            <if test="isRelationUser != null">
+                and is_relation_user = #{isRelationUser}
+            </if>
+            <if test="moneyType != null and moneyType != ''">
+                and money_type = #{moneyType}
+            </if>
+            <if test="money != null and money != ''">
+                and money = #{money}
+            </if>
+            <if test="feedback != null and feedback != ''">
+                and Feedback = #{feedback}
+            </if>
+            <if test="reportStopTime != null">
+                and report_stop_time = #{reportStopTime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into activity(name, type, content,create_time, start_time, introduct, address_detail, address, user_num, already_join_num, detail_text, photo_url, messages, status, qr_code_url, back_money_idea, group_names, activity_label, is_show_index, user_info_text, is_realation_group, is_waiting, is_pass, is_relation_user, money_type, money, Feedback, report_stop_time)
+        values (#{name}, #{type},#{content}, #{createTime}, #{startTime}, #{introduct}, #{addressDetail}, #{address}, #{userNum}, #{alreadyJoinNum}, #{detailText}, #{photoUrl}, #{messages}, #{status}, #{qrCodeUrl}, #{backMoneyIdea}, #{groupNames}, #{activityLabel}, #{isShowIndex}, #{userInfoText}, #{isRealationGroup}, #{isWaiting}, #{isPass}, #{isRelationUser}, #{moneyType}, #{money}, #{feedback}, #{reportStopTime})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into activity(name, type, create_time, start_time, introduct, address_detail, address, user_num, already_join_num, detail_text, photo_url, messages, status, qr_code_url, back_money_idea, group_names, activity_label, is_show_index, user_info_text, is_realation_group, is_waiting, is_pass, is_relation_user, money_type, money, Feedback, report_stop_time)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.name}, #{entity.type}, #{entity.createTime}, #{entity.startTime}, #{entity.introduct}, #{entity.addressDetail}, #{entity.address}, #{entity.userNum}, #{entity.alreadyJoinNum}, #{entity.detailText}, #{entity.photoUrl}, #{entity.messages}, #{entity.status}, #{entity.qrCodeUrl}, #{entity.backMoneyIdea}, #{entity.groupNames}, #{entity.activityLabel}, #{entity.isShowIndex}, #{entity.userInfoText}, #{entity.isRealationGroup}, #{entity.isWaiting}, #{entity.isPass}, #{entity.isRelationUser}, #{entity.moneyType}, #{entity.money}, #{entity.feedback}, #{entity.reportStopTime})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into activity(name, type, create_time, start_time, introduct, address_detail, address, user_num, already_join_num, detail_text, photo_url, messages, status, qr_code_url, back_money_idea, group_names, activity_label, is_show_index, user_info_text, is_realation_group, is_waiting, is_pass, is_relation_user, money_type, money, Feedback, report_stop_time)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.name}, #{entity.type}, #{entity.createTime}, #{entity.startTime}, #{entity.introduct}, #{entity.addressDetail}, #{entity.address}, #{entity.userNum}, #{entity.alreadyJoinNum}, #{entity.detailText}, #{entity.photoUrl}, #{entity.messages}, #{entity.status}, #{entity.qrCodeUrl}, #{entity.backMoneyIdea}, #{entity.groupNames}, #{entity.activityLabel}, #{entity.isShowIndex}, #{entity.userInfoText}, #{entity.isRealationGroup}, #{entity.isWaiting}, #{entity.isPass}, #{entity.isRelationUser}, #{entity.moneyType}, #{entity.money}, #{entity.feedback}, #{entity.reportStopTime})
+        </foreach>
+        on duplicate key update
+        name = values(name),
+        type = values(type),
+        create_time = values(create_time),
+        start_time = values(start_time),
+        introduct = values(introduct),
+        address_detail = values(address_detail),
+        address = values(address),
+        user_num = values(user_num),
+        already_join_num = values(already_join_num),
+        detail_text = values(detail_text),
+        photo_url = values(photo_url),
+        messages = values(messages),
+        status = values(status),
+        qr_code_url = values(qr_code_url),
+        back_money_idea = values(back_money_idea),
+        group_names = values(group_names),
+        activity_label = values(activity_label),
+        is_show_index = values(is_show_index),
+        user_info_text = values(user_info_text),
+        is_realation_group = values(is_realation_group),
+        is_waiting = values(is_waiting),
+        is_pass = values(is_pass),
+        is_relation_user = values(is_relation_user),
+        money_type = values(money_type),
+        money = values(money),
+        Feedback = values(Feedback),
+        report_stop_time = values(report_stop_time)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update activity
+        <set>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="type != null and type != ''">
+                type = #{type},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime},
+            </if>
+            <if test="introduct != null and introduct != ''">
+                introduct = #{introduct},
+            </if>
+            <if test="addressDetail != null and addressDetail != ''">
+                address_detail = #{addressDetail},
+            </if>
+            <if test="address != null and address != ''">
+                address = #{address},
+            </if>
+            <if test="userNum != null">
+                user_num = #{userNum},
+            </if>
+            <if test="alreadyJoinNum != null">
+                already_join_num = #{alreadyJoinNum},
+            </if>
+            <if test="detailText != null and detailText != ''">
+                detail_text = #{detailText},
+            </if>
+            <if test="photoUrl != null and photoUrl != ''">
+                photo_url = #{photoUrl},
+            </if>
+            <if test="messages != null and messages != ''">
+                messages = #{messages},
+            </if>
+            <if test="status != null and status != ''">
+                status = #{status},
+            </if>
+            <if test="qrCodeUrl != null and qrCodeUrl != ''">
+                qr_code_url = #{qrCodeUrl},
+            </if>
+            <if test="backMoneyIdea != null and backMoneyIdea != ''">
+                back_money_idea = #{backMoneyIdea},
+            </if>
+            <if test="groupNames != null and groupNames != ''">
+                group_names = #{groupNames},
+            </if>
+            <if test="activityLabel != null and activityLabel != ''">
+                activity_label = #{activityLabel},
+            </if>
+            <if test="isShowIndex != null">
+                is_show_index = #{isShowIndex},
+            </if>
+            <if test="userInfoText != null and userInfoText != ''">
+                user_info_text = #{userInfoText},
+            </if>
+            <if test="isRealationGroup != null">
+                is_realation_group = #{isRealationGroup},
+            </if>
+            <if test="isWaiting != null">
+                is_waiting = #{isWaiting},
+            </if>
+            <if test="isPass != null">
+                is_pass = #{isPass},
+            </if>
+            <if test="isRelationUser != null">
+                is_relation_user = #{isRelationUser},
+            </if>
+            <if test="moneyType != null and moneyType != ''">
+                money_type = #{moneyType},
+            </if>
+            <if test="money != null and money != ''">
+                money = #{money},
+            </if>
+            <if test="feedback != null and feedback != ''">
+                Feedback = #{feedback},
+            </if>
+            <if test="reportStopTime != null">
+                report_stop_time = #{reportStopTime},
+            </if>
+            <if test="content != null and content != ''">
+                content = #{content},
+            </if>
+
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from activity where id = #{id}
+    </delete>
+
+</mapper>
+

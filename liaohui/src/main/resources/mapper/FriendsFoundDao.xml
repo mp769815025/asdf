@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhirong.liaohui.dao.FriendsFoundDao">
+
+    <resultMap id="BaseResultMap" type="com.zhirong.liaohui.entity.FriendsFound">
+        <!--@Table friends_found-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
+        <result property="title" column="title" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="VARCHAR"/>
+        <result property="address" column="address" jdbcType="VARCHAR"/>
+        <result property="times" column="times" jdbcType="VARCHAR"/>
+        <result property="genderNeed" column="gender_need" jdbcType="VARCHAR"/>
+        <result property="photoUrl" column="gender_need" jdbcType="VARCHAR"/>
+
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          id, user_id, title, type, address, times, gender_need,photo_url
+        from friends_found
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" parameterType="com.zhirong.liaohui.entity.FriendsFound" resultMap="BaseResultMap" >
+        select
+          id, user_id, title, type, address, times, gender_need,photo_url
+        from friends_found
+        <where>
+            <if test="friendsFound.id != null">
+                and id = #{friendsFound.id}
+            </if>
+            <if test="friendsFound.userId != null">
+                and user_id = #{friendsFound.userId}
+            </if>
+            <if test="friendsFound.title != null and title != ''">
+                and title = #{friendsFound.title}
+            </if>
+            <if test="friendsFound.type != null and type != ''">
+                and type = #{friendsFound.type}
+            </if>
+            <if test="friendsFound.address != null and address != ''">
+                and address = #{friendsFound.address}
+            </if>
+            <if test="friendsFound.times != null and times != ''">
+                and times = #{friendsFound.times}
+            </if>
+            <if test="friendsFound.genderNeed != null and genderNeed != ''">
+                and gender_need = #{friendsFound.genderNeed}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          id, user_id, title, type, address, times, gender_need,photo_url
+        from liaohui.friends_found
+    </select>    
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from friends_found
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="title != null and title != ''">
+                and title = #{title}
+            </if>
+            <if test="type != null and type != ''">
+                and type = #{type}
+            </if>
+            <if test="address != null and address != ''">
+                and address = #{address}
+            </if>
+            <if test="times != null and times != ''">
+                and times = #{times}
+            </if>
+            <if test="genderNeed != null and genderNeed != ''">
+                and gender_need = #{genderNeed}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into friends_found(user_id, title, type, address, times, gender_need, photo_url)
+        values (#{userId}, #{title}, #{type}, #{address}, #{times}, #{genderNeed}, #{photoUrl})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into friends_found(user_id, title, type, address, times, gender_need,photo_url)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.userId}, #{entity.title}, #{entity.type}, #{entity.address}, #{entity.times}, #{entity.genderNeed}), #{entity.photoUrl}
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into friends_found(user_id, title, type, address, times, gender_need, photo_url)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.userId}, #{entity.title}, #{entity.type}, #{entity.address}, #{entity.times}, #{entity.genderNeed}), #{entity.photoUrl}
+        </foreach>
+        on duplicate key update
+        user_id = values(user_id),
+        title = values(title),
+        type = values(type),
+        address = values(address),
+        times = values(times),
+        gender_need = values(gender_need)
+        photo_url = values(photo_url)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update friends_found
+        <set>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+            <if test="title != null and title != ''">
+                title = #{title},
+            </if>
+            <if test="type != null and type != ''">
+                type = #{type},
+            </if>
+            <if test="address != null and address != ''">
+                address = #{address},
+            </if>
+            <if test="times != null and times != ''">
+                times = #{times},
+            </if>
+            <if test="genderNeed != null and genderNeed != ''">
+                gender_need = #{genderNeed},
+            </if>
+            <if test="photoUrl != null and photoUrl != ''">
+                photo_url = #{photoUrl},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from friends_found where id = #{id}
+    </delete>
+
+</mapper>
+

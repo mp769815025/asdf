@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhirong.liaohui.dao.CityRelateDao">
+
+    <resultMap id="BaseResultMap" type="com.zhirong.liaohui.entity.CityRelate">
+        <!--@Table city_relate-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="pid" column="pid" jdbcType="INTEGER"/>
+        <result property="cityname" column="cityname" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="INTEGER"/>
+        <result property="num" column="num" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          id, pid, cityname, type, num
+        from city_relate
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          id, pid, cityname, type, num
+        from city_relate
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="pid != null">
+                and pid = #{pid}
+            </if>
+            <if test="cityname != null and cityname != ''">
+                and cityname = #{cityname}
+            </if>
+            <if test="type != null">
+                and type = #{type}
+            </if>
+            <if test="num != null">
+                and num = #{num}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          id, pid, cityname, type, num
+        from liaohui.city_relate order by num
+    </select>    
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from city_relate
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="pid != null">
+                and pid = #{pid}
+            </if>
+            <if test="cityname != null and cityname != ''">
+                and cityname = #{cityname}
+            </if>
+            <if test="type != null">
+                and type = #{type}
+            </if>
+            <if test="num != null">
+                and num = #{num}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into city_relate(pid, cityname, type, num)
+        values (#{pid}, #{cityname}, #{type}, #{num})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into city_relate(pid, cityname, type, num)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.pid}, #{entity.cityname}, #{entity.type}, #{entity.num})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into city_relate(pid, cityname, type, num)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.pid}, #{entity.cityname}, #{entity.type}, #{entity.num})
+        </foreach>
+        on duplicate key update
+        pid = values(pid),
+        cityname = values(cityname),
+        type = values(type),
+        num = values(num)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update city_relate
+        <set>
+            <if test="pid != null">
+                pid = #{pid},
+            </if>
+            <if test="cityname != null and cityname != ''">
+                cityname = #{cityname},
+            </if>
+            <if test="type != null">
+                type = #{type},
+            </if>
+            <if test="num != null">
+                num = #{num},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from city_relate where id = #{id}
+    </delete>
+
+</mapper>
+

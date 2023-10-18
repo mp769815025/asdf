@@ -1,0 +1,430 @@
+drop table if exists activity;
+
+drop table if exists activity_group;
+
+drop table if exists friends_found;
+
+drop table if exists groupz;
+
+drop table if exists role;
+
+drop table if exists user_activity;
+
+drop table if exists user_activity_report;
+
+drop table if exists user_activity_selection;
+
+drop table if exists user_collect_look_lover;
+
+drop table if exists user_group;
+
+drop table if exists user_role;
+
+drop table if exists wechat_user;
+
+/*==============================================================*/
+/* Table: activity                                              */
+/*==============================================================*/
+create or replace table activity
+(
+   id                   int(11)                        null,
+   name                 varchar(11)                    null,
+   type                 varchar(11)                    null,
+   create_time          timestamp                      null,
+   start_time           timestamp                      null,
+   introduct            varchar(11)                    null,
+   address_detail       varchar(11)                    null,
+   address              varchar(11)                    null,
+   user_num             int(11)                        null,
+   already_join_num     int(11)                        null,
+   detail_text          varchar(11)                    null,
+   photo_url            varchar(11)                    null,
+   "message"            varchar(11)                    null,
+   status               varchar(11)                    null,
+   qr_code_url          varchar(11)                    null,
+   back_money_idea      varchar(11)                    null,
+   group_names          varchar(11)                    null,
+   activity_label       varchar(11)                    null,
+   is_show_index        int(11)                        null,
+   user_info_text       varchar(11)                    null,
+   is_realation_group   int(11)                        null,
+   is_waiting           int(11)                        null,
+   is_pass              int(11)                        null,
+   is_relation_user     int(11)                        null,
+   money_type           varchar(11)                    null,
+   money                varchar(11)                    null,
+   Feedback             varchar(2000)                  null,
+   report_stop_time     timestamp                      null
+);
+
+comment on table activity is
+'活动';
+
+comment on column activity.name is
+'活动名称';
+
+comment on column activity.type is
+'活动类型(羽毛球等)';
+
+comment on column activity.create_time is
+'创建时间';
+
+comment on column activity.start_time is
+'开始时间';
+
+comment on column activity.introduct is
+'活动简介';
+
+comment on column activity.address_detail is
+'活动地址备注';
+
+comment on column activity.address is
+'活动地址';
+
+comment on column activity.user_num is
+'活动限定人数';
+
+comment on column activity.already_join_num is
+'已参加人数';
+
+comment on column activity.detail_text is
+'活动详情';
+
+comment on column activity.photo_url is
+'精彩回顾图片地址';
+
+comment on column activity."message" is
+'评论';
+
+comment on column activity.status is
+'活动状态(1.正在进行2.已结束)';
+
+comment on column activity.qr_code_url is
+'二维码链接';
+
+comment on column activity.back_money_idea is
+'退款政策';
+
+comment on column activity.group_names is
+'圈子名称(多个)';
+
+comment on column activity.activity_label is
+'活动标签';
+
+comment on column activity.is_show_index is
+'是否首页展示';
+
+comment on column activity.user_info_text is
+'用户填写信息';
+
+comment on column activity.is_realation_group is
+'是否关联到俱乐部';
+
+comment on column activity.is_waiting is
+'满座后可候补等位';
+
+comment on column activity.is_pass is
+'报名后是否通过';
+
+comment on column activity.is_relation_user is
+'是否可以挂人';
+
+comment on column activity.money_type is
+'费用类型';
+
+comment on column activity.money is
+'费用金额';
+
+comment on column activity.Feedback is
+'意见反馈';
+
+comment on column activity.report_stop_time is
+'报名截止时间';
+
+/*==============================================================*/
+/* Table: activity_group                                        */
+/*==============================================================*/
+create or replace table activity_group
+(
+   id                   int(11)                        null,
+   activity_id          int(11)                        null,
+   group_id             int(11)                        null
+);
+
+comment on table activity_group is
+'活动圈子中间表';
+
+/*==============================================================*/
+/* Table: friends_found                                         */
+/*==============================================================*/
+create or replace table friends_found
+(
+   id                   int(11)                        null,
+   user_id              int(11)                        null,
+   title                varchar(11)                    null,
+   type                 varchar(11)                    null,
+   address              varchar(11)                    null,
+   "time"               varchar(11)                    null,
+   gender_need          varchar(11)                    null
+);
+
+comment on table friends_found is
+'找搭子';
+
+comment on column friends_found.user_id is
+'搭子关联人';
+
+comment on column friends_found.title is
+'搭子标题';
+
+comment on column friends_found.type is
+'搭子类型';
+
+comment on column friends_found.address is
+'选择地点';
+
+comment on column friends_found."time" is
+'选择时间';
+
+comment on column friends_found.gender_need is
+'性别要求';
+
+/*==============================================================*/
+/* Table: groupz                                                */
+/*==============================================================*/
+create or replace table groupz
+(
+   id                   int(11)                        null,
+   head_url             varchar(100)                   null,
+   name                 varchar(100)                   null,
+   type                 varchar(10)                    null,
+   point                varchar(100)                   null,
+   phone                varchar(100)                   null
+);
+
+comment on table groupz is
+'圈子';
+
+comment on column groupz.head_url is
+'圈子头像';
+
+comment on column groupz.name is
+'圈子名称';
+
+comment on column groupz.type is
+'类型，共创型,主导型';
+
+comment on column groupz.point is
+'圈子位置';
+
+comment on column groupz.phone is
+'联系方式';
+
+/*==============================================================*/
+/* Table: role                                                  */
+/*==============================================================*/
+create or replace table role
+(
+   id                   int(11)                        null,
+   name                 varchar(100)                   null,
+   code                 varchar(100)                   null
+);
+
+comment on table role is
+'权限表';
+
+/*==============================================================*/
+/* Table: user_activity                                         */
+/*==============================================================*/
+create or replace table user_activity
+(
+   id                   int(11)                        null,
+   open_id              int(11)                        null,
+   activity_id          int(11)                        null,
+   type                 int(11)                        null,
+   audit_status         int(11)                        null
+);
+
+comment on table user_activity is
+'用户活动中间表';
+
+comment on column user_activity.open_id is
+'用户id';
+
+comment on column user_activity.activity_id is
+'活动id';
+
+comment on column user_activity.type is
+'1参加2发布';
+
+comment on column user_activity.audit_status is
+'是否报名成功';
+
+/*==============================================================*/
+/* Table: user_activity_report                                  */
+/*==============================================================*/
+create or replace table user_activity_report
+(
+   id                   int(11)                        null,
+   name                 varchar(50)                    null,
+   certificate          varchar(50)                    null,
+   phone                varchar(50)                    null,
+   activity_id          int(11)                        null,
+   status               varchar(50)                    null
+);
+
+comment on table user_activity_report is
+'报名审核管理';
+
+comment on column user_activity_report.name is
+'报名人姓名';
+
+comment on column user_activity_report.certificate is
+'身份证号';
+
+comment on column user_activity_report.phone is
+'手机号码';
+
+comment on column user_activity_report.activity_id is
+'活动id';
+
+comment on column user_activity_report.status is
+'审核状态(是否通过)';
+
+/*==============================================================*/
+/* Table: user_activity_selection                               */
+/*==============================================================*/
+create or replace table user_activity_selection
+(
+   activity_id          int(11)                        null,
+   id                   int(11)                        null,
+   type                 varchar(11)                    null,
+   filed_name           varchar(11)                    null,
+   filed_value          varchar(11)                    null
+);
+
+comment on table user_activity_selection is
+'用户活动报名自定义选项';
+
+comment on column user_activity_selection.type is
+'选项类型(下拉选,文本)';
+
+comment on column user_activity_selection.filed_name is
+'选项名称';
+
+comment on column user_activity_selection.filed_value is
+'选项值';
+
+/*==============================================================*/
+/* Table: user_collect_look_lover                               */
+/*==============================================================*/
+create or replace table user_collect_look_lover
+(
+   id                   int(11)                        null,
+   activity_id          int(11)                        null,
+   open_id              int(11)                        null,
+   type                 int(11)                        null
+);
+
+comment on table user_collect_look_lover is
+'我收藏的';
+
+comment on column user_collect_look_lover.type is
+'类型(1收藏2粉丝3关注)';
+
+/*==============================================================*/
+/* Table: user_group                                            */
+/*==============================================================*/
+create or replace table user_group
+(
+   id                   int(11)                        null,
+   open_id              int(11)                        null,
+   group_id             int(11)                        null,
+   type                 varchar(100)                   null
+);
+
+comment on table user_group is
+'用户圈子中间表';
+
+comment on column user_group.type is
+'申请中,申请通过';
+
+/*==============================================================*/
+/* Table: user_role                                             */
+/*==============================================================*/
+create or replace table user_role
+(
+   id                   int(11)                        null,
+   role_id              int(11)                        null,
+   open_id              int(11)                        null
+);
+
+comment on table user_role is
+'用户角色关系表';
+
+/*==============================================================*/
+/* Table: wechat_user                                           */
+/*==============================================================*/
+create or replace table wechat_user
+(
+   id                   int(11)                        null,
+   nickname             varchar(100)                   null,
+   avatar_url           varchar(500)                   null,
+   gender               int(11)                        null,
+   city                 varchar(100)                   null,
+   phone                varchar(100)                   null,
+   open_id              varchar(100)                   null,
+   union_id             varchar(100)                   null,
+   status               varchar(100)                   null,
+   evaluate             varchar(100)                   null,
+   collect_activity_num int(11)                        null,
+   look                 int(11)                        null,
+   group_num            int(11)                        null,
+   lover                int(11)                        null,
+   certificate          varchar(100)                   null
+);
+
+comment on table wechat_user is
+'微信用户';
+
+comment on column wechat_user.nickname is
+'用户昵称';
+
+comment on column wechat_user.avatar_url is
+'用户头像';
+
+comment on column wechat_user.gender is
+'性别';
+
+comment on column wechat_user.city is
+'省份';
+
+comment on column wechat_user.phone is
+'手机号码';
+
+comment on column wechat_user.open_id is
+'小程序openId';
+
+comment on column wechat_user.union_id is
+'小程序unionId';
+
+comment on column wechat_user.status is
+'用户状态(活跃)';
+
+comment on column wechat_user.evaluate is
+'靠谱度';
+
+comment on column wechat_user.collect_activity_num is
+'收藏活动数';
+
+comment on column wechat_user.look is
+'关注数';
+
+comment on column wechat_user.group_num is
+'加入圈子数';
+
+comment on column wechat_user.lover is
+'粉丝';
+
+comment on column wechat_user.certificate is
+'身份证号';

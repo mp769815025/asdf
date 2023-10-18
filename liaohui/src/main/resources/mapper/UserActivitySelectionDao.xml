@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhirong.liaohui.dao.UserActivitySelectionDao">
+
+    <resultMap id="BaseResultMap" type="com.zhirong.liaohui.entity.UserActivitySelection">
+        <!--@Table user_activity_selection-->
+        <result property="activityId" column="activity_id" jdbcType="INTEGER"/>
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="type" column="type" jdbcType="VARCHAR"/>
+        <result property="filedName" column="filed_name" jdbcType="VARCHAR"/>
+        <result property="filedValue" column="filed_value" jdbcType="VARCHAR"/>
+        <result property="isAdmin" column="is_admin" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          activity_id, id, type, filed_name, filed_value, is_admin
+        from user_activity_selection
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          activity_id, id, type, filed_name, filed_value, is_admin
+        from user_activity_selection
+        <where>
+            <if test="activityId != null">
+                and activity_id = #{activityId}
+            </if>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="type != null and type != ''">
+                and type = #{type}
+            </if>
+            <if test="filedName != null and filedName != ''">
+                and filed_name = #{filedName}
+            </if>
+            <if test="filedValue != null and filedValue != ''">
+                and filed_value = #{filedValue}
+            </if>
+            <if test="isAdmin != null">
+                and is_admin = #{isAdmin}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          activity_id, id, type, filed_name, filed_value, is_admin
+        from liaohui.user_activity_selection
+    </select>    
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from user_activity_selection
+        <where>
+            <if test="activityId != null">
+                and activity_id = #{activityId}
+            </if>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="type != null and type != ''">
+                and type = #{type}
+            </if>
+            <if test="filedName != null and filedName != ''">
+                and filed_name = #{filedName}
+            </if>
+            <if test="filedValue != null and filedValue != ''">
+                and filed_value = #{filedValue}
+            </if>
+            <if test="isAdmin != null">
+                and is_admin = #{isAdmin}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into user_activity_selection(activity_id, type, filed_name, filed_value, is_admin)
+        values (#{activityId}, #{type}, #{filedName}, #{filedValue}, #{isAdmin})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into user_activity_selection(activity_id, type, filed_name, filed_value, is_admin)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.activityId}, #{entity.type}, #{entity.filedName}, #{entity.filedValue}, #{entity.isAdmin})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into user_activity_selection(activity_id, type, filed_name, filed_value, is_admin)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.activityId}, #{entity.type}, #{entity.filedName}, #{entity.filedValue}, #{entity.isAdmin})
+        </foreach>
+        on duplicate key update
+        activity_id = values(activity_id),
+        type = values(type),
+        filed_name = values(filed_name),
+        filed_value = values(filed_value),
+        is_admin = values(is_admin)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update user_activity_selection
+        <set>
+            <if test="activityId != null">
+                activity_id = #{activityId},
+            </if>
+            <if test="type != null and type != ''">
+                type = #{type},
+            </if>
+            <if test="filedName != null and filedName != ''">
+                filed_name = #{filedName},
+            </if>
+            <if test="filedValue != null and filedValue != ''">
+                filed_value = #{filedValue},
+            </if>
+            <if test="isAdmin != null">
+                is_admin = #{isAdmin},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from user_activity_selection where id = #{id}
+    </delete>
+
+</mapper>
+
